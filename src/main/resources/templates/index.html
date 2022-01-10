@@ -22,11 +22,11 @@
                     <div class="col-xs-12 col-sm-6 col-md-6 col-lg-3 col-xl-3" th:each="blog,status : ${blogs}">
                         <div class="tm-content-box">
                             <img src="../static/img/tm-img-310x180-2.jpg" alt="Image" class="tm-margin-b-20 img-fluid" th:src="@{'/img/tm-img-310x180-' + ${status.count} + '.jpg'}">
-                            <h4 class="tm-margin-b-20 tm-gold-text" th:text="${blog.getKey()}">Lorem ipsum dolor #2</h4>
-                            <p class="tm-margin-b-20" th:text="${blog.getValue()}">Aenean cursus tellus mauris, quis
+                            <h4 class="tm-margin-b-20 tm-gold-text" th:text="${blog.getTitle()}">Lorem ipsum dolor #2</h4>
+                            <p class="tm-margin-b-20" th:text="${blog.getShortDescription()}">Aenean cursus tellus mauris, quis
                             consequat mauris dapibus id. Donec
                             scelerisque porttitor pharetra</p>
-                            <a href="#" class="tm-btn text-uppercase" th:href="@{'/blog/' + ${status.count}}">Read More</a>
+                            <a href="#" class="tm-btn text-uppercase" th:href="@{'/blog/' + ${blog.getId()}}">Read More</a>
                         </div>
                     </div>
 

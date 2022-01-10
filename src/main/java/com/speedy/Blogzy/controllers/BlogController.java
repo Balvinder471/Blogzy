@@ -1,7 +1,6 @@
 package com.speedy.Blogzy.controllers;
 
-import com.speedy.Blogzy.service.BlogData;
-import org.springframework.beans.factory.annotation.Qualifier;
+import com.speedy.Blogzy.repositories.BlogRepository;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -14,45 +13,24 @@ public class BlogController {
 
 
     private int year;
-    private BlogData natureBlog;
-    private BlogData fantasyBlog;
-    private BlogData scifiBlog;
-    private BlogData sportsBlog;
     private String title;
+    private BlogRepository blogRepository;
 
-    public BlogController(@Qualifier("natureData") BlogData natureBlog, @Qualifier("fantasyData") BlogData fantasyBlog, @Qualifier("scifiData") BlogData scifiBlog, @Qualifier("sportsData") BlogData sportsBlog) {
-        this.natureBlog = natureBlog;
-        this.fantasyBlog = fantasyBlog;
-        this.scifiBlog = scifiBlog;
-        this.sportsBlog = sportsBlog;
-        title = "Blogzy";
-        year = Calendar.getInstance().get(Calendar.YEAR);
+    public BlogController(BlogRepository blogRepository) {
+        this.blogRepository = blogRepository;
+        title="Blogzy";
+        year=Calendar.getInstance().get(Calendar.YEAR);
     }
+
+
 
     @RequestMapping("/blog/{id}")
-    public String getBlog(@PathVariable int id, Model model) {
+    public String getBlog(@PathVariable long id, Model model) {
         model.addAttribute("title", title);
         model.addAttribute("year", year);
-        switch (id) {
-            case 1:
-                model.addAttribute("blogDetails", sportsBlog.getBlogDetails());
-                model.addAttribute("authorDetails", sportsBlog.getAuthorDetails());
-                break;
-            case 2:
-                model.addAttribute("blogDetails", fantasyBlog.getBlogDetails());
-                model.addAttribute("authorDetails", fantasyBlog.getAuthorDetails());
-                break;
-            case 3:
-                model.addAttribute("blogDetails", scifiBlog.getBlogDetails());
-                model.addAttribute("authorDetails", scifiBlog.getAuthorDetails());
-                break;
-            case 4:
-                model.addAttribute("blogDetails", natureBlog.getBlogDetails());
-                model.addAttribute("authorDetails", natureBlog.getAuthorDetails());
-                break;
-        }
+        model.addAttribute("blogDetails", blogRepository.findById(id).get());
+        model.addAttribute("blogs", blogRepository.findAll());
+        model.addAttribute("authorDetails", blogRepository.findById(id).get().getAuthor());
         return "blog";
     }
-
-
 }

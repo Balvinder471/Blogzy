@@ -1,6 +1,6 @@
 package com.speedy.Blogzy.controllers;
 
-import com.speedy.Blogzy.service.HomeData;
+import com.speedy.Blogzy.repositories.BlogRepository;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -11,14 +11,14 @@ import java.util.Calendar;
 @Controller
 public class NavController {
 
-    private HomeData homeData;
     private int year;
     private String title;
+    private BlogRepository blogRepository;
 
-    public NavController(HomeData homeData) {
-        this.homeData = homeData;
+    public NavController(BlogRepository blogRepository) {
+        this.blogRepository = blogRepository;
+        title = "Blogzy";
         year = Calendar.getInstance().get(Calendar.YEAR);
-        title="Blogzy";
     }
 
     @RequestMapping("")
@@ -26,7 +26,7 @@ public class NavController {
     {
         model.addAttribute("title", title);
         model.addAttribute("year", year);
-        model.addAttribute("blogs", homeData.getBlogs());
+        model.addAttribute("blogs", blogRepository.findAll());
         return "index";
     }
 
@@ -34,6 +34,7 @@ public class NavController {
     public String getAbout(Model model) {
         model.addAttribute("title", title);
         model.addAttribute("year", year);
+        model.addAttribute("blogs", blogRepository.findAll());
         return "about";
     }
 }
