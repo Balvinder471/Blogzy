@@ -1,5 +1,7 @@
 package com.speedy.Blogzy.models;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.*;
 import org.hibernate.Hibernate;
 
@@ -25,6 +27,7 @@ public class Author {
     @Column(unique = true, nullable = false)
     private String email;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "author", fetch = FetchType.LAZY)
+    @JsonBackReference
     @ToString.Exclude
     private List<Blog> blogs;
     @Override

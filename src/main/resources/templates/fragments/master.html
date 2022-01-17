@@ -53,7 +53,7 @@
                             </a>
                             <div class="dropdown-menu" aria-labelledby="navbarDropdown">
                                 <div th:each="blog : ${blogs}">
-                                <a class="dropdown-item" href="#" th:href="@{'/blog/' + ${blog.getId()}}" th:text="${blog.getTitle()}">Sports</a>
+                                <a class="dropdown-item" href="#" th:href="@{'/blogs/' + ${blog.getId()}}" th:text="${blog.getTitle()}">Sports</a>
                                 <div class="dropdown-divider"></div>
                                 </div>
                             </div>

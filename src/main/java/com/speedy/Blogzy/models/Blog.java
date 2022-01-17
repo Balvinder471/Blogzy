@@ -1,5 +1,8 @@
 package com.speedy.Blogzy.models;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.*;
 import org.hibernate.Hibernate;
 import org.hibernate.annotations.CreationTimestamp;
@@ -27,12 +30,13 @@ public class Blog {
 
     private String title;
 
-    @Enumerated(value = EnumType.STRING)
-    private Genre genre;
+//    @Enumerated(value = EnumType.STRING)
+//    private Genre genre;
 
     @CreationTimestamp
     @Temporal(TemporalType.TIMESTAMP)
     @Column(updatable = false)
+    @JsonFormat(pattern = "yyyy-MM-dd")
     private Date creationDate;
 
     private String shortDescription;
@@ -40,6 +44,7 @@ public class Blog {
     private String description;
 
     @ManyToOne
+    @JsonManagedReference
     private Author author;
     @Override
     public boolean equals(Object o) {
