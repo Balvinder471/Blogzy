@@ -1,6 +1,7 @@
 package com.speedy.Blogzy.controllers;
 
 import com.speedy.Blogzy.repositories.BlogRepository;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -36,5 +37,12 @@ public class NavController {
         model.addAttribute("year", year);
         model.addAttribute("blogs", blogRepository.findAll());
         return "about";
+    }
+
+    @RequestMapping("/login")
+    public String getLogin(Model model) {
+        model.addAttribute("title", title);
+        model.addAttribute("year", year);
+        return "authentication/login";
     }
 }
