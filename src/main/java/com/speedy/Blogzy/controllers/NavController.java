@@ -1,5 +1,6 @@
 package com.speedy.Blogzy.controllers;
 
+import com.speedy.Blogzy.models.Author;
 import com.speedy.Blogzy.repositories.BlogRepository;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
@@ -42,7 +43,13 @@ public class NavController {
     @RequestMapping("/login")
     public String getLogin(Model model) {
         model.addAttribute("title", title);
-        model.addAttribute("year", year);
         return "authentication/login";
+    }
+
+    @RequestMapping("/register")
+    public String getRegister(Model model) {
+        model.addAttribute("author", new Author());
+        model.addAttribute("title", title);
+        return "authentication/register";
     }
 }

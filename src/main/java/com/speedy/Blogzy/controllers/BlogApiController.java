@@ -1,8 +1,11 @@
 package com.speedy.Blogzy.controllers;
 
+import com.speedy.Blogzy.DTO.CustomBlogDto;
+import com.speedy.Blogzy.DTO.ExceptionDto;
 import com.speedy.Blogzy.Exceptions.NotFoundException;
 import com.speedy.Blogzy.models.Blog;
 import com.speedy.Blogzy.repositories.BlogRepository;
+import org.modelmapper.ModelMapper;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -12,12 +15,14 @@ import java.util.Optional;
 
 @RestController
 @RequestMapping("/api/blogs")
-public class ApiController {
+public class BlogApiController {
 
     private BlogRepository blogRepository;
+    private ModelMapper modelMapper;
 
-    public ApiController(BlogRepository blogRepository) {
+    public BlogApiController(BlogRepository blogRepository, ModelMapper modelMapper) {
         this.blogRepository = blogRepository;
+        this.modelMapper = modelMapper;
     }
 
     @GetMapping("/{id}")
@@ -31,9 +36,9 @@ public class ApiController {
 
     @PostMapping("")
     @ResponseStatus(value = HttpStatus.CREATED)
-    public Blog addBlog(@RequestBody Blog blog) {
+    public CustomBlogDto addBlog(@RequestBody Blog blog) {
         blogRepository.save(blog);
-        return blog;
+        return modelMapper.map(blog, CustomBlogDto.class);
     }
 
     @GetMapping("")
@@ -42,11 +47,12 @@ public class ApiController {
     }
 
     @ExceptionHandler(NotFoundException.class)
-    public ResponseEntity<Blog> handleException() {
-        Blog blog = new Blog();
-        blog.setTitle("No Such Blog!!!");
-        blog.setDescription("You tried to access a blog that does not exists or might be removed by the author or an admin!!");
-        return new ResponseEntity<>(blog, HttpStatus.NOT_FOUND);
+    public ResponseEntity<ExceptionDto> handleException() {
+        ExceptionDto exceptionDto = new ExceptionDto();
+        exceptionDto.setStatus(HttpStatus.NOT_FOUND.value());
+        exceptionDto.setMessage("You tried to access a blog that does not exists or might be removed by the author or an admin!!");
+        exceptionDto.setTimeStamp(System.currentTimeMillis());
+        return new ResponseEntity<>(exceptionDto, HttpStatus.NOT_FOUND);
     }
 }
 

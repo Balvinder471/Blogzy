@@ -2,6 +2,7 @@ package com.speedy.Blogzy.models;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.*;
 import org.hibernate.Hibernate;
@@ -44,7 +45,8 @@ public class Blog {
     private String description;
 
     @ManyToOne
-    @JsonManagedReference
+//    @JsonManagedReference
+    @JsonIgnore
     private Author author;
     @Override
     public boolean equals(Object o) {

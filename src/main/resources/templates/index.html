@@ -1,9 +1,11 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head th:replace="fragments/master.html::headTag">
 </head>
     <body>
-       <div class="tm-header" th:replace="fragments/master.html::header"></div>
+    <div class="tm-header" sec:authorize="isAuthenticated()"  th:replace="fragments/master.html::header"></div>
+    <div class="tm-header" sec:authorize="isAnonymous()"  th:replace="fragments/authenticate.html::header"></div>
 
         <div class="tm-home-img-container">
             <img src="../static/images/tm-home-img.jpg" alt="Image" class="hidden-lg-up img-fluid">
