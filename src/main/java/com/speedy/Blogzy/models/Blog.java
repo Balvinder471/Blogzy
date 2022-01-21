@@ -11,6 +11,8 @@ import org.springframework.format.annotation.DateTimeFormat;
 
 
 import javax.persistence.*;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Size;
 import java.util.Date;
 import java.util.Objects;
 
@@ -29,6 +31,8 @@ public class Blog {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @NotBlank
+    @Size(min = 2, max = 25)
     private String title;
 
 //    @Enumerated(value = EnumType.STRING)
@@ -40,8 +44,12 @@ public class Blog {
     @JsonFormat(pattern = "yyyy-MM-dd")
     private Date creationDate;
 
+    @NotBlank
+    @Size(min = 15, max = 150)
     private String shortDescription;
     @Lob
+    @NotBlank
+    @Size(min = 125)
     private String description;
 
     @ManyToOne

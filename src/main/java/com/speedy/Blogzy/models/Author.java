@@ -8,6 +8,10 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import javax.persistence.*;
+import javax.validation.constraints.Email;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Pattern;
+import javax.validation.constraints.Size;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
@@ -25,14 +29,22 @@ public class Author implements UserDetails {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+    @NotBlank
+    @Size(min = 2, max = 50)
     private String name;
     @Column(length = 50)
+    @NotBlank
+    @Size(min = 10 ,max = 50)
     private String description;
     @Column(unique = true, nullable = false)
+    @NotBlank
+    @Pattern(regexp = "[a-z0-9!#$%&'+/=?^_`{|}~-]+(?:.[a-z0-9!#$%&'+/=?^_`{|}~-]+)@(?:[a-z0-9](?:[a-z0-9-][a-z0-9])?.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?", message = "Invalid Email!!")
     private String email;
     @Column(nullable = false)
+    @NotBlank
+    @Size(min = 8, max = 100)
     private String password;
-    @Column(columnDefinition = "varchar(255) default 'USER'", nullable = false)
+    @Column(columnDefinition = "varchar(255) default 'ROLE_USER'", nullable = false)
     private String role;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "author", fetch = FetchType.LAZY)
     @JsonBackReference

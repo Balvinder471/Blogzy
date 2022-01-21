@@ -34,7 +34,7 @@
                                     consequat mauris dapibus id. Donec
                                     scelerisque porttitor pharetra</p>
                                     <p class="tm-margin-b-20" th:text="'Email : ' + ${authorDetails.getEmail()}"> </p>
-                                    <a href="#" class="tm-btn text-uppercase">Detail</a>    
+                                    <a href="#" class="tm-btn text-uppercase" th:href="@{'/authors/' + ${authorDetails.getId()}}">Detail</a>
                                 </div>
                             </div>
                         </div>
@@ -99,5 +99,6 @@
         
         <footer class="tm-footer" th:replace="fragments/master.html::footer">
         </footer>
+        <div th:replace="fragments/master.html::scripts"></div>
 </body>
 </html>

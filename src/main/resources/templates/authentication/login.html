@@ -19,6 +19,9 @@
           <div th:if="${param.logout}" class="text-success">
             You have been logged out successfully!
           </div>
+          <div th:if="${param.registered}" class="text-success">
+            Registration Successful!
+          </div>
           <input type="email" class="form-control" placeholder="Email"  name="username" required autofocus>
           <input type="password" class="form-control" placeholder="Password" name="password" required>
           <button class="btn btn-lg btn-primary btn-block" type="submit">

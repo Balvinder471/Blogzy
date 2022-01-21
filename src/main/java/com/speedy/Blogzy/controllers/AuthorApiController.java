@@ -32,7 +32,7 @@ public class AuthorApiController {
     @ResponseStatus(HttpStatus.CREATED)
     public Author createAuthor(@RequestBody Author author){
         if(author.getRole() == null)
-            author.setRole("USER");
+            author.setRole("ROLE_USER");
         author.setPassword(passwordEncoder.encode(author.getPassword()));
         authorRepository.save(author);
         return author;

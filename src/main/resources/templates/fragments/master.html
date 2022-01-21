@@ -45,18 +45,21 @@
                             <a href="index.html" class="nav-link" th:href="@{/}">Home</a>
                         </li>
                         <li class="nav-item">
+                            <a href="about.html" class="nav-link" th:href="@{/add-new-blog}">Create Blog</a>
+                        </li>
+                        <li class="nav-item">
                             <a href="about.html" class="nav-link" th:href="@{/about}">About</a>
                         </li>
                         <li class="nav-item dropdown">
-                            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                Blogs
-                            </a>
-                            <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                                <div th:each="blog : ${blogs}">
+                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            Blogs
+                        </a>
+                        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                            <div th:each="blog : ${blogs}">
                                 <a class="dropdown-item" href="#" th:href="@{'/blogs/' + ${blog.getId()}}" th:text="${blog.getTitle()}">Sports</a>
                                 <div class="dropdown-divider"></div>
-                                </div>
                             </div>
+                        </div>
                         </li>
                         <li class="nav-item dropdown">
                             <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownsecond" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -64,97 +67,20 @@
                             </a>
                             <div class="dropdown-menu" aria-labelledby="navbarDropdownsecond">
                                 <div>
-                                    <a class="dropdown-item" href="#" th:href="@{/logout}">Logout</a>
+                                    <a class="dropdown-item" href="#" th:href="@{/my-profile}">Account Details</a>
                                     <div class="dropdown-divider"></div>
+                                    <a class="dropdown-item" href="#" th:href="@{/logout}">Logout</a>
                                 </div>
                             </div>
                         </li>
                     </ul>
                 </div>
-
             </nav>
-
         </div>
     </div>
 </div>
 <footer class="tm-footer" th:fragment="footer">
     <div class="container-fluid">
-<!--        <div class="row">-->
-
-<!--            <div class="col-xs-12 col-sm-6 col-md-6 col-lg-3 col-xl-3">-->
-
-<!--                <div class="tm-footer-content-box">-->
-<!--                    <h3 class="tm-gold-text tm-title tm-footer-content-box-title">Proin eu posuere felis</h3>-->
-<!--                    <div class="tm-gray-bg">-->
-<!--                        <p>Classic is free HTML CSS website template provided by templatemo for everyone. Feel free to use it.</p>-->
-<!--                        <p>Aenean cursus tellus mauris, quis consequat mauris dapibus id. Donec scelerisque porttitor pharetra.</p>-->
-<!--                        <p><strong>Danny Egg (Executive)</strong></p>-->
-<!--                    </div>-->
-<!--                </div>-->
-
-<!--            </div>-->
-
-<!--            <div class="col-xs-12 col-sm-6 col-md-6 col-lg-3 col-xl-3">-->
-<!--                <div class="tm-footer-content-box tm-footer-links-container">-->
-
-<!--                    <h3 class="tm-gold-text tm-title tm-footer-content-box-title">Nulla tortor dolor</h3>-->
-<!--                    <nav>-->
-<!--                        <ul class="nav">-->
-<!--                            <li><a href="#" class="tm-footer-link">Tincidunt non faucibus</a></li>-->
-<!--                            <li><a href="#" class="tm-footer-link">Vestibulum tempor</a></li>-->
-<!--                            <li><a href="#" class="tm-footer-link">Fusce non turpis euismod</a></li>-->
-<!--                            <li><a href="#" class="tm-footer-link">Lorem ipsum dolor sit</a></li>-->
-<!--                            <li><a href="#" class="tm-footer-link">Nam in augue consectetur</a></li>-->
-<!--                            <li><a href="#" class="tm-footer-link">Text Link Color #CCCC66</a></li>-->
-<!--                        </ul>-->
-<!--                    </nav>-->
-
-<!--                </div>-->
-
-<!--            </div>-->
-
-<!--            &lt;!&ndash; Add the extra clearfix for only the required viewport-->
-<!--                http://stackoverflow.com/questions/24590222/bootstrap-3-grid-with-different-height-in-each-item-is-it-solvable-using-only-->
-<!--            &ndash;&gt;-->
-<!--            <div class="clearfix hidden-lg-up"></div>-->
-
-<!--            <div class="col-xs-12 col-sm-6 col-md-6 col-lg-3 col-xl-3">-->
-
-<!--                <div class="tm-footer-content-box">-->
-
-<!--                    <h3 class="tm-gold-text tm-title tm-footer-content-box-title">Etiam mollis ornare</h3>-->
-<!--                    <p class="tm-margin-b-30">Aenean cursus tellus mauris, quis consequat mauris dapibus id. Donec scelerisque porttitor pharetra.</p><hr class="tm-margin-b-30">-->
-<!--                    <p class="tm-margin-b-30">Aenean cursus tellus mauris, quis consequat mauris dapibus id. Donec scelerisque porttitor pharetra.</p><hr class="tm-margin-b-30">-->
-<!--                    <p class="tm-margin-b-30">Aenean cursus tellus mauris, quis consequat mauris dapibus id. Donec scelerisque porttitor pharetra.</p>-->
-<!--                    <a href="#" class="tm-btn tm-btn-gray text-uppercase">Read More</a>-->
-
-<!--                </div>-->
-
-<!--            </div>-->
-
-<!--            <div class="col-xs-12 col-sm-6 col-md-6 col-lg-3 col-xl-3">-->
-
-<!--                <div class="tm-footer-content-box">-->
-
-<!--                    <h3 class="tm-gold-text tm-title tm-footer-content-box-title">Fusce non turpis</h3>-->
-<!--                    <div class="tm-margin-b-30">-->
-<!--                        <img src="../static/img/tm-img-100x100-1.jpg" alt="Image" class="tm-footer-thumbnail" th:src="@{/img/tm-img-100x100-1.jpg}">-->
-<!--                        <img src="../static/img/tm-img-100x100-2.jpg" alt="Image" class="tm-footer-thumbnail" th:src="@{/img/tm-img-100x100-2.jpg}">-->
-<!--                        <img src="../static/img/tm-img-100x100-3.jpg" alt="Image" class="tm-footer-thumbnail" th:src="@{/img/tm-img-100x100-3.jpg}">-->
-<!--                        <img src="../static/img/tm-img-100x100-4.jpg" alt="Image" class="tm-footer-thumbnail" th:src="@{/img/tm-img-100x100-4.jpg}">-->
-<!--                        <img src="../static/img/tm-img-100x100-5.jpg" alt="Image" class="tm-footer-thumbnail" th:src="@{/img/tm-img-100x100-5.jpg}">-->
-<!--                        <img src="../static/img/tm-img-100x100-6.jpg" alt="Image" class="tm-footer-thumbnail" th:src="@{/img/tm-img-100x100-6.jpg}">-->
-<!--                    </div>-->
-<!--                    <p class="tm-margin-b-20">Curabitur dui massa, aliquam quis mi sed, tempor vulputate tellus. Sed vestibulum non neque.</p>-->
-<!--                    <a href="#" class="tm-btn tm-btn-gray text-uppercase">Browse</a>-->
-
-<!--                </div>-->
-
-<!--            </div>-->
-
-
-<!--        </div>-->
-
         <div class="row">
             <div class="col-xs-12 tm-copyright-col">
                 <p class="tm-copyright-text text-center" th:text="'Copyright '+ ${year} + ' @' + ${title}"></p>
@@ -162,5 +88,10 @@
         </div>
     </div>
 </footer>
+<div th:fragment="scripts">
+    <script th:src="@{/js/bootstrap.min.js}"></script>
+    <script src="https://www.atlasestateagents.co.uk/javascript/tether.min.js"></script> <!-- Tether for Bootstrap, http://stackoverflow.com/questions/34567939/how-to-fix-the-error-error-bootstrap-tooltips-require-tether-http-github-h -->
+    <script th:src="@{/js/jquery-1.11.3.min.js}"></script>
+</div>
 </body>
 </html>

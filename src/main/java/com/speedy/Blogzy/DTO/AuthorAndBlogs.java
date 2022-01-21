@@ -9,7 +9,8 @@ import java.util.List;
 @Getter
 @Setter
 public class AuthorAndBlogs {
-    private Long id;
     private String name;
+    private String email;
+    private String description;
     private List<Blog> blogs;
 }

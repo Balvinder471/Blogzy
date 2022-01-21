@@ -19,6 +19,7 @@
                         <p class="tm-subtitle">Blogzy brings you all the blogs that you ever need to read, so don't even think about any other blogging website next time.</p>
                     </div>
                 </div>
+                <div th:fragment="blogs">
                 <div class="row">
 
                     <div class="col-xs-12 col-sm-6 col-md-6 col-lg-3 col-xl-3" th:each="blog,status : ${blogs}">
@@ -33,12 +34,22 @@
                     </div>
 
                 </div> <!-- row -->
+                <div class="row text-xs-center m-t-3">
+                <nav aria-label="Page navigation example" class="">
+                    <ul class="pagination">
+                        <li class="page-item" th:if="${page != 0}"><a class="page-link" href="#" th:href="@{'?page=' + ${page-1}}">Previous</a></li>
+                        <li class="page-item" th:classappend="${page==i-1?'active':''}" th:each="i : ${#numbers.sequence(1,pages)}"><a class="page-link"  th:href="@{'?page=' + ${i-1}}" ><span th:text="${i}"></span></a></li>
+                        <li class="page-item" th:if="${page+1 != pages}"><a class="page-link" href="#" th:href="@{'?page=' + ${page+1}}">Next</a></li>
+                    </ul>
+                </nav>
+                </div>
+            </div>
             </div>
         </section>
 
        <footer class="tm-footer" th:replace="fragments/master.html::footer">
        </footer>
 
-
+    <div th:replace="fragments/master.html::scripts"></div>
 </body>
 </html>
