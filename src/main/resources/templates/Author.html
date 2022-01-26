@@ -11,7 +11,30 @@
       <a href="#aboutModal" data-toggle="modal" data-target="#myModal"><img src="https://encrypted-tbn2.gstatic.com/images?q=tbn:ANd9GcRbezqZpEuwGSvitKy3wrwnth5kysKdRqBW54cAszm_wiutku3R" name="aboutme" width="140" height="140" class="img-circle"></a>
       <h3 th:text="${author.getName()}">Joe Sixpack</h3>
       <p><em>click on the profile pic for more</em></p>
-      <button class="btn btn-primary" th:if="${#authentication.getName()} == ${author.getEmail()}">Edit profile</button>
+      <div th:if="${#authentication.getName()} == ${author.getEmail()}">
+      <button class="btn btn-primary" ><a th:href="@{/edit-profile}" style="color: inherit;">Edit profile</a></button>
+        <button class="btn btn-danger"><a data-toggle="modal" data-target="#deleteModal" style="color: inherit;">Delete profile</a></button>
+        <div class="modal fade" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+          <div class="modal-dialog" role="document">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Are You Sure ?</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                  <span aria-hidden="true">&times;</span>
+                </button>
+              </div>
+              <div class="modal-body">
+                This action is irreversible, and you will lose all your blogs!!
+              </div>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Go Back</button>
+                <a type="button" class="btn btn-danger" th:href="@{/authors/delete}">Yes, Delete My profile</a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      </div>
     </center>
   </div>
   <!-- Modal -->

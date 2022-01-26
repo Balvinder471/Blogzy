@@ -18,7 +18,10 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import javax.jws.WebParam;
+import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
+import java.security.Principal;
 import java.util.Optional;
 
 
@@ -39,12 +42,13 @@ public class AuthorController {
     @PostMapping("")
     public String saveAuthor(@Valid @ModelAttribute Author author, BindingResult bindingResult, @RequestParam("password_confirmation") String cp, Model model){
 
-        boolean match = author.getPassword().contentEquals(cp);
+        boolean match = author.getPassword().contentEquals(cp), registered = authorRepository.findByEmail(author.getEmail()).isPresent();
 
-        if(bindingResult.hasErrors() || !match){
+        if(bindingResult.hasErrors() || !match || registered){
             model.addAttribute("author", author);
             model.addAttribute("match", match);
             model.addAttribute("title", title);
+            model.addAttribute("registered", registered);
             return "authentication/register";
         }
 
@@ -70,6 +74,32 @@ public class AuthorController {
         model.addAttribute("pages",blogs.getTotalPages());
         model.addAttribute("title", title);
         return "Author";
+    }
+
+    @PostMapping("/update")
+    public String updateAuthor (@Valid @ModelAttribute Author author, BindingResult bindingResult,@RequestParam("password_confirmation") String cp, Principal principal, Model model) {
+        Author authenticatedAuthor = authorRepository.findByEmail(principal.getName()).get();
+        author.setId(authenticatedAuthor.getId());
+        author.setEmail(authenticatedAuthor.getEmail());
+        boolean match = author.getPassword().contentEquals(cp);
+        if((bindingResult.hasErrors() && bindingResult.getFieldErrorCount() > 1) || !match) {
+            model.addAttribute("author");
+            model.addAttribute("title", title);
+            model.addAttribute("match", match);
+            return "authentication/register";
+        }
+        authorRepository.save(author);
+        return "redirect:/my-profile";
+    }
+
+    @RequestMapping("/delete")
+    public String deleteAuthor (Principal principal, HttpServletResponse response) {
+        authorRepository.delete(authorRepository.findByEmail(principal.getName()).get());
+        Cookie cookie = new Cookie("AUTH", "");
+        cookie.setPath("/");
+        cookie.setMaxAge(0);
+        response.addCookie(cookie);
+        return "redirect:/";
     }
 
 }

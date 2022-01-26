@@ -1,21 +1,23 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head th:replace="fragments/authenticate.html::headTag">
   <meta charset="UTF-8">
   <title>Blogzy</title>
 </head>
 <body>
-<div class="tm-header" th:replace="fragments/authenticate.html::header">
+<div class="tm-header" sec:authorize="isAuthenticated()"  th:replace="fragments/master.html::header"></div>
+<div class="tm-header" sec:authorize="isAnonymous()"  th:replace="fragments/authenticate.html::header"></div>
 </div>
 <div class="container mt-5">
   <div class="row centered-form">
     <div class="col-xs-12 col-sm-8  col-md-offset-2">
       <div class="panel panel-default">
         <div class="panel-heading">
-          <h3 class="panel-title">Please sign up for Blogzy</h3>
+          <h3 class="panel-title" th:text="${#httpServletRequest.getRequestURI().equals('/register') || #httpServletRequest.getRequestURI().equals('/authors') ? 'Please sign up for Blogzy' : 'Edit Your Profile'}">Please sign up for Blogzy</h3>
         </div>
         <div class="panel-body">
-          <form th:object="${author}" method="post" th:action="@{/authors}">
+          <form th:object="${author}" method="post" th:action="@{${#httpServletRequest.getRequestURI().equals('/register') || #httpServletRequest.getRequestURI().equals('/authors') ? '/authors' : '/authors/update'}}">
             <div th:if="${#fields.hasErrors()}" class="alert alert-danger">
               <p>Please Correct the following errors!!</p>
             </div>
@@ -42,12 +44,17 @@
               </div>
             </div>
 
-            <div class="form-group">
+            <div class="form-group" th:if="${#httpServletRequest.getRequestURI().equals('/register') || #httpServletRequest.getRequestURI().equals('/authors')}">
               <input type="email" name="email" id="email" th:field="*{email}" class="form-control input-sm" placeholder="Email Address">
               <span th:if="${#fields.hasErrors('email')}" class="text-danger">
                     <ul>
                       <li th:each="err : ${#fields.errors('email')}" th:text="${err}"></li>
                     </ul>
+              </span>
+              <span th:if="${registered}">
+                <ul>
+                <li>Email Already Registered</li>
+                </ul>
               </span>
             </div>
 
@@ -73,12 +80,13 @@
                 </div>
               </div>
             </div>
-            <input type="submit" value="Register" class="btn btn-info btn-block">
+            <input type="submit" th:value="${#httpServletRequest.getRequestURI().equals('/register') || #httpServletRequest.getRequestURI().equals('/authors') ? 'Register' : 'Update'}" value="Register" class="btn btn-info btn-block">
           </form>
         </div>
       </div>
     </div>
   </div>
 </div>
+<div th:replace="fragments/master.html::scripts"></div>
 </body>
 </html>

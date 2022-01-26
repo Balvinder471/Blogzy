@@ -50,17 +50,17 @@
                         <li class="nav-item">
                             <a href="about.html" class="nav-link" th:href="@{/about}">About</a>
                         </li>
-                        <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            Blogs
-                        </a>
-                        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                            <div th:each="blog : ${blogs}">
-                                <a class="dropdown-item" href="#" th:href="@{'/blogs/' + ${blog.getId()}}" th:text="${blog.getTitle()}">Sports</a>
-                                <div class="dropdown-divider"></div>
-                            </div>
-                        </div>
-                        </li>
+<!--                        <li class="nav-item dropdown">-->
+<!--                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">-->
+<!--                            Your Blogs-->
+<!--                        </a>-->
+<!--                        <div class="dropdown-menu" aria-labelledby="navbarDropdown">-->
+<!--                            <div th:each="blog : ${blogs}">-->
+<!--                                <a class="dropdown-item" href="#" th:href="@{'/blogs/' + ${blog.getId()}}" th:text="${blog.getTitle()}">Sports</a>-->
+<!--                                <div class="dropdown-divider"></div>-->
+<!--                            </div>-->
+<!--                        </div>-->
+<!--                        </li>-->
                         <li class="nav-item dropdown">
                             <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownsecond" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                 <span th:text="${#authentication.getName()}"></span>
@@ -69,7 +69,7 @@
                                 <div>
                                     <a class="dropdown-item" href="#" th:href="@{/my-profile}">Account Details</a>
                                     <div class="dropdown-divider"></div>
-                                    <a class="dropdown-item" href="#" th:href="@{/logout}">Logout</a>
+                                    <a class="dropdown-item" href="#" th:href="@{/logout}" data-toggle="modal" data-target="#exampleModal">Logout</a>
                                 </div>
                             </div>
                         </li>
@@ -78,7 +78,29 @@
             </nav>
         </div>
     </div>
+
+    <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Are You Sure ?</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    Do You really wanna logout ?
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Go Back</button>
+                    <a type="button" class="btn btn-danger" th:href="@{/logout}">Yes, Log me out</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
 </div>
+
 <footer class="tm-footer" th:fragment="footer">
     <div class="container-fluid">
         <div class="row">

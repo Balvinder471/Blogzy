@@ -1,6 +1,7 @@
 package com.speedy.Blogzy.controllers;
 
 import com.speedy.Blogzy.Exceptions.NotFoundException;
+import com.speedy.Blogzy.Exceptions.UnauthorizedAccessException;
 import com.speedy.Blogzy.models.Blog;
 import com.speedy.Blogzy.repositories.AuthorRepository;
 import com.speedy.Blogzy.repositories.BlogRepository;
@@ -59,7 +60,6 @@ public class BlogController {
 
     @PostMapping("")
     public String addBlog(@Valid @ModelAttribute Blog blog, BindingResult bindingResult, Principal principal, Model model) {
-//        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         if(bindingResult.hasErrors()) {
             model.addAttribute("blog", blog);
             return "createblog";
@@ -69,10 +69,36 @@ public class BlogController {
         return "redirect:/blogs/" + blog.getId();
     }
 
+    @PostMapping("/{id}")
+    public String updateBlog(@PathVariable Long id, @Valid @ModelAttribute Blog blog, BindingResult bindingResult,Principal principal, Model model) {
+        if(!blogRepository.existsById(id))
+            throw new NotFoundException("No Such Blog Exists");
+        if(!blogRepository.findById(id).get().getAuthor().equals(authorRepository.findByEmail(principal.getName()).get()))
+            throw new UnauthorizedAccessException("User does not have access to this blog with id : " + blog.getId());
+        if(bindingResult.hasErrors()) {
+            model.addAttribute("blog", blog);
+            return "createblog";
+        }
+        blog.setAuthor(authorRepository.findByEmail(principal.getName()).get());
+        blogRepository.save(blog);
+        return "redirect:/blogs/" + blog.getId();
+    }
+
+    @GetMapping("/delete/{id}")
+    public String deleteBlog(@PathVariable Long id, Principal principal) {
+        if(!blogRepository.existsById(id))
+            throw new NotFoundException("No Such Blog Exists");
+        if(!blogRepository.findById(id).get().getAuthor().equals(authorRepository.findByEmail(principal.getName()).get()))
+            throw new UnauthorizedAccessException("User " + principal.getName() + " does not own the blog with id : " +id + " but tries to delete it!!");
+        blogRepository.deleteById(id);
+        return "redirect:/my-profile";
+    }
+
 //    @ExceptionHandler(NotFoundException.class)
 //    public ModelAndView handleException() {
 //        ModelAndView modelAndView = new ModelAndView();
 //        modelAndView.setViewName("contact");
 //        return modelAndView;
 //    }
+    // Ema
 }

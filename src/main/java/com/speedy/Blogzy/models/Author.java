@@ -1,6 +1,7 @@
 package com.speedy.Blogzy.models;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.speedy.Blogzy.Validators.EmailConstraint;
 import lombok.*;
 import org.hibernate.Hibernate;
 import org.springframework.security.core.GrantedAuthority;
@@ -38,6 +39,7 @@ public class Author implements UserDetails {
     private String description;
     @Column(unique = true, nullable = false)
     @NotBlank
+//    @EmailConstraint
     @Pattern(regexp = "[a-z0-9!#$%&'+/=?^_`{|}~-]+(?:.[a-z0-9!#$%&'+/=?^_`{|}~-]+)@(?:[a-z0-9](?:[a-z0-9-][a-z0-9])?.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?", message = "Invalid Email!!")
     private String email;
     @Column(nullable = false)

@@ -3,15 +3,19 @@ package com.speedy.Blogzy.controllers;
 import com.speedy.Blogzy.DTO.AuthorAndBlogs;
 import com.speedy.Blogzy.DTO.ExceptionDto;
 import com.speedy.Blogzy.Exceptions.NotFoundException;
+import com.speedy.Blogzy.Exceptions.UnauthorizedAccessException;
 import com.speedy.Blogzy.models.Author;
 import com.speedy.Blogzy.repositories.AuthorRepository;
 import org.modelmapper.ModelMapper;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.parameters.P;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
 import javax.jws.WebParam;
+import javax.servlet.http.HttpServletRequest;
+import java.security.Principal;
 import java.util.List;
 import java.util.Optional;
 
@@ -40,10 +44,32 @@ public class AuthorApiController {
 
     @GetMapping("/{id}")
     public AuthorAndBlogs getAuthorBlogs(@PathVariable Long id) {
+        System.out.println("Inside Get!!");
         Optional<Author> authorOptional = authorRepository.findById(id);
         if(!authorOptional.isPresent())
             throw new NotFoundException("No Author With that Id : " + id);
         return modelMapper.map(authorOptional.get(), AuthorAndBlogs.class);
+    }
+
+    @PutMapping("")
+    public AuthorAndBlogs editAuthor(@RequestBody Author author, Principal principal) {
+        Author authenticatedAuthor = authorRepository.findByEmail(principal.getName()).get();
+        author.setId(authenticatedAuthor.getId());
+        author.setEmail(authenticatedAuthor.getEmail());
+        authorRepository.save(author);
+        return modelMapper.map(author, AuthorAndBlogs.class);
+    }
+
+    @DeleteMapping("")
+    public ExceptionDto deleteAuthor(Principal principal) {
+        System.out.println("Inside Delete");
+        Author author = authorRepository.findByEmail(principal.getName()).get();
+        authorRepository.delete(author);
+        ExceptionDto mssg = new ExceptionDto();
+        mssg.setTimeStamp(System.currentTimeMillis());
+        mssg.setStatus(200);
+        mssg.setMessage("Author Deleted Successfully");
+        return mssg;
     }
 
     @GetMapping("")
@@ -58,5 +84,14 @@ public class AuthorApiController {
         exceptionDto.setMessage("No Such Author Exists or might have been removed by an admin or may have unregistered!!");
         exceptionDto.setTimeStamp(System.currentTimeMillis());
         return new ResponseEntity<>(exceptionDto, HttpStatus.NOT_FOUND);
+    }
+
+    @ExceptionHandler(UnauthorizedAccessException.class)
+    public ResponseEntity<ExceptionDto> handleUnauthorizedAccess() {
+        ExceptionDto exceptionDto = new ExceptionDto();
+        exceptionDto.setStatus(HttpStatus.FORBIDDEN.value());
+        exceptionDto.setTimeStamp(System.currentTimeMillis());
+        exceptionDto.setMessage("You do not have access to that resource!!!");
+        return new ResponseEntity<>(exceptionDto, HttpStatus.FORBIDDEN);
     }
 }

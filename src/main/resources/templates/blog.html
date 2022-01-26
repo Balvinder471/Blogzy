@@ -19,6 +19,29 @@
                         <div class="tm-blog-post">
                             <h3 class="tm-gold-text" th:text="${blogDetails.getTitle()}">Pellentesque fermentum mauris</h3>
                             <p th:text="'Posted at : ' + ${sdf.format(blogDetails.getCreationDate())}">Vivamus accumsan blandit ligula. Sed lobortis efficitur sapien</p>
+                            <div th:if="${blogDetails.getAuthor().getEmail().equals(#authentication.getName())}">
+                            <a class="btn btn-primary" th:href="@{'/update/' + ${blogDetails.getId()}}">Edit Blog</a>
+                                <a class="btn btn-danger" data-toggle="modal" data-target="#deleteModal">Delete Blog</a>
+                                <div class="modal fade" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                    <div class="modal-dialog" role="document">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <h5 class="modal-title" id="exampleModalLabel">Are You Sure ?</h5>
+                                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                    <span aria-hidden="true">&times;</span>
+                                                </button>
+                                            </div>
+                                            <div class="modal-body">
+                                                Once Deleted you will never be able to recover this blog
+                                            </div>
+                                            <div class="modal-footer">
+                                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Go Back</button>
+                                                <a type="button" class="btn btn-danger" th:href="@{'/blogs/delete/' + ${blogDetails.getId()}}">Yes, Delete it</a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
                             <img src="../static/images/tm-img-1010x336-1.jpg" alt="Image" class="img-fluid tm-img-post" th:src="@{/images/tm-img-1010x336-1.jpg}">
                             <p th:text="${blogDetails.getDescription()}">You can help templatemo by telling your friends about our HTML CSS templates. Praesent velit ante, congue ac dignissim in, vehicula sit amet urna. Fusce in dapibus quam, eget finibus velit. Nullam erat odio, vulputate id est ut, consequat rutrum justo. Vivamus vel leo vel nunc tincidunt mattis. Sed neque diam, semper suscipit dictum a, sodales ac metus. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos.</p>
                             <p>Morbi vel pharetra massa, non iaculis tortor. Nulla porttitor tincidunt felis et feugiat. Vivamus fermentum ligula justo, sit amet blandit nisl volutpat id. Fusce sagittis ultricies felis, non luctus mauris lacinia quis. Ut fringilla lacus ac tempor ullamcorper. Mauris iaculis placerat ex et mattis.</p>
