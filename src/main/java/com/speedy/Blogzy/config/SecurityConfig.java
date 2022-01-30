@@ -1,17 +1,22 @@
 package com.speedy.Blogzy.config;
 
 import com.speedy.Blogzy.Filters.JWTTokenValidatorFilter;
+import com.speedy.Blogzy.service.AuthorDetailsService;
 import org.springframework.boot.autoconfigure.security.servlet.PathRequest;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.oauth2.client.web.AuthorizationRequestRepository;
+import org.springframework.security.oauth2.client.web.HttpSessionOAuth2AuthorizationRequestRepository;
+import org.springframework.security.oauth2.core.endpoint.OAuth2AuthorizationRequest;
 import org.springframework.security.web.authentication.www.BasicAuthenticationFilter;
 
 @Configuration
@@ -22,21 +27,28 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
         http
                 .csrf().disable()
-                .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
+                .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.NEVER)
                 .and()
                 .addFilterBefore(new JWTTokenValidatorFilter(), BasicAuthenticationFilter.class)
                 .authorizeRequests()
                 .requestMatchers(PathRequest.toStaticResources().atCommonLocations()).permitAll()
                 .antMatchers("/", "/about").permitAll()
-                .antMatchers("/login", "/register").anonymous()
+                .antMatchers("/login", "/register", "/oauth/**").anonymous()
                 .antMatchers(HttpMethod.POST,"/api/authors", "/authors", "/api/authenticate", "/authenticate").anonymous()
 //                .antMatchers("/api/authors/**", "/api/blogs/**").hasRole("ADMIN")
         .anyRequest().authenticated()
                 .and()
-//                .exceptionHandling().authenticationEntryPoint( new JWTAuthenticationEntryPoint())
-//                .and()
                 .formLogin()
                 .loginPage("/login")
+                .and()
+                .oauth2Login()
+                .loginPage("/login")
+                .defaultSuccessUrl("/process-oauth", true)
+                .failureUrl("/login?error")
+                .authorizationEndpoint()
+                .baseUri("/oauth")
+//                .authorizationRequestRepository(authorizationRequestRepository())
+                .and()
                 .and()
                 .logout()
                 .deleteCookies("AUTH");

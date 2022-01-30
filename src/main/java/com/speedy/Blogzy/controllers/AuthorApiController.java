@@ -4,6 +4,7 @@ import com.speedy.Blogzy.DTO.AuthorAndBlogs;
 import com.speedy.Blogzy.DTO.ExceptionDto;
 import com.speedy.Blogzy.Exceptions.NotFoundException;
 import com.speedy.Blogzy.Exceptions.UnauthorizedAccessException;
+import com.speedy.Blogzy.Utils.JWTConstants;
 import com.speedy.Blogzy.models.Author;
 import com.speedy.Blogzy.repositories.AuthorRepository;
 import org.modelmapper.ModelMapper;
@@ -11,6 +12,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.parameters.P;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import javax.jws.WebParam;
@@ -37,7 +39,8 @@ public class AuthorApiController {
     public Author createAuthor(@RequestBody Author author){
         if(author.getRole() == null)
             author.setRole("ROLE_USER");
-        author.setPassword(passwordEncoder.encode(author.getPassword()));
+        if(null != author.getPassword())
+            author.setPassword(passwordEncoder.encode(author.getPassword()));
         authorRepository.save(author);
         return author;
     }

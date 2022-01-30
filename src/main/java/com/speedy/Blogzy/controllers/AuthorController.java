@@ -81,6 +81,7 @@ public class AuthorController {
         Author authenticatedAuthor = authorRepository.findByEmail(principal.getName()).get();
         author.setId(authenticatedAuthor.getId());
         author.setEmail(authenticatedAuthor.getEmail());
+        author.setRole("ROLE_USER");
         boolean match = author.getPassword().contentEquals(cp);
         if((bindingResult.hasErrors() && bindingResult.getFieldErrorCount() > 1) || !match) {
             model.addAttribute("author");
@@ -88,6 +89,7 @@ public class AuthorController {
             model.addAttribute("match", match);
             return "authentication/register";
         }
+        author.setPassword(passwordEncoder.encode(author.getPassword()));
         authorRepository.save(author);
         return "redirect:/my-profile";
     }

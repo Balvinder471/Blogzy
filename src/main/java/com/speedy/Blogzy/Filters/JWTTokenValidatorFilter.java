@@ -31,25 +31,12 @@ public class JWTTokenValidatorFilter extends OncePerRequestFilter {
 
         String jwt = request.getHeader(JWTConstants.JWT_HEADER);
         if(null == jwt && null != request.getCookies()) {
-            for (Cookie cookie : request.getCookies()) {
+            for (Cookie cookie : request.getCookies())
                 jwt = cookie.getName().contentEquals("AUTH") ? cookie.getValue() : null;
-            }
         }
         if (null != jwt) {
             try {
-                SecretKey key = Keys.hmacShaKeyFor(
-                        JWTConstants.JWT_SECRET.getBytes(StandardCharsets.UTF_8));
-
-                Claims claims = Jwts.parserBuilder()
-                        .setSigningKey(key)
-                        .build()
-                        .parseClaimsJws(jwt)
-                        .getBody();
-                String username = String.valueOf(claims.get("username"));
-                String authorities = (String) claims.get("authorities");
-                Authentication auth = new UsernamePasswordAuthenticationToken(username,null,
-                        AuthorityUtils.commaSeparatedStringToAuthorityList(authorities));
-                SecurityContextHolder.getContext().setAuthentication(auth);
+                SecurityContextHolder.getContext().setAuthentication(JWTUtil.generateAuthFromJWT(jwt));
             }
             catch (MalformedJwtException | SignatureException | ExpiredJwtException e) {
              if(null !=  request.getHeader(JWTConstants.JWT_HEADER)) {
@@ -66,7 +53,7 @@ public class JWTTokenValidatorFilter extends OncePerRequestFilter {
 
         }
         else {
-        if(request.getRequestURI().contains("/api/") && !request.getRequestURI().contentEquals("/api/authenticate") && (!request.getRequestURI().contentEquals("/api/authors") || !request.getMethod().contentEquals("POST")))
+        if(request.getRequestURI().contains("/api/") && !request.getRequestURI().contentEquals("/api/authenticate") && (!request.getRequestURI().contentEquals("/api/authors")  || !request.getMethod().contentEquals("POST")))
             request.getRequestDispatcher("/api/authenticate").forward(new GetRequestConverter(request), response);
         }
         filterChain.doFilter(request, response);

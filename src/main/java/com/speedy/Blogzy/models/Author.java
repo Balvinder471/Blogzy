@@ -17,9 +17,6 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 import java.util.Objects;
-//insert into authors (name, email, description) values ('Hari Prasad', 'hari123@gmail.com', 'A proud Blogzy developer');
-//        insert into authors (name, email, description) values ('Makashi', 'makash123@yahoo.in', 'Tech Enthusiast and passionate blogger');
-//        insert into authors (name, email, description) values ('Speedy', 'sspeedy472@gmail.com', 'Runs at high speed, no one can catch him');
 @Entity
 @Getter
 @Setter
@@ -40,7 +37,7 @@ public class Author implements UserDetails {
     @Column(unique = true, nullable = false)
     @NotBlank
 //    @EmailConstraint
-    @Pattern(regexp = "[a-z0-9!#$%&'+/=?^_`{|}~-]+(?:.[a-z0-9!#$%&'+/=?^_`{|}~-]+)@(?:[a-z0-9](?:[a-z0-9-][a-z0-9])?.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?", message = "Invalid Email!!")
+//    @Pattern(regexp = "[a-z0-9!#$%&'+/=?^_`{|}~-]+(?:.[a-z0-9!#$%&'+/=?^_`{|}~-]+)@(?:[a-z0-9](?:[a-z0-9-][a-z0-9])?.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?", message = "Invalid Email!!")
     private String email;
     @Column(nullable = false)
     @NotBlank
