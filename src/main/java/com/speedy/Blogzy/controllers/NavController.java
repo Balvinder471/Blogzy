@@ -26,6 +26,7 @@ import org.springframework.security.authentication.*;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.authentication.AuthenticationManagerFactoryBean;
+import org.springframework.security.config.oauth2.client.CommonOAuth2Provider;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -118,13 +119,12 @@ public class NavController {
         ResponseEntity<Map> response = restTemplate.exchange(userInfo, HttpMethod.GET, entity, Map.class);
         Map authDetails = response.getBody();
         model.addAttribute("name", authDetails.get("name"));
-
         if(!authorRepository.findByEmail((String) authDetails.get("email")).isPresent()) {
             Author author = new Author();
             author.setEmail((String) authDetails.get("email"));
             author.setName((String) authDetails.get("name"));
             author.setRole("ROLE_USER");
-            author.setDescription("Google User " + author.getName());
+            author.setDescription(authentication.getAuthorizedClientRegistrationId() + " user " + authDetails.get("name"));
             author.setPassword(passwordEncoder.encode(JWTConstants.JWT_SECRET));
             authorRepository.save(author);
         }
