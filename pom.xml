@@ -26,13 +26,13 @@
 	    <repository>
 		<id>test-releases</id>
 		<url>https://github.com/Balvinder471/Blogzy.git</url>
-		<snapshots><enabled>false</enabled></snapshots>
+		<snapshots><enabled>true</enabled></snapshots>
 		<releases><enabled>true</enabled></releases>
 	    </repository>
 	    <repository>
 		<id>releases</id>
 		<url>https://github.com/Balvinder471/Blogzy.git</url>
-		<snapshots><enabled>false</enabled></snapshots>
+		<snapshots><enabled>true</enabled></snapshots>
 		<releases><enabled>true</enabled></releases>
 	    </repository>
 	</repositories>
