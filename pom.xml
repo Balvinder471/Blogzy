@@ -16,6 +16,26 @@
 	<properties>
 		<java.version>1.8</java.version>
 	</properties>
+	<repositories>
+	    <repository>
+		<id>snapshots</id>
+		<url>https://github.com/Balvinder471/Blogzy.git</url>
+		<snapshots><enabled>true</enabled></snapshots>
+		<releases><enabled>false</enabled></releases>
+	    </repository>
+	    <repository>
+		<id>test-releases</id>
+		<url>https://github.com/Balvinder471/Blogzy.git</url>
+		<snapshots><enabled>false</enabled></snapshots>
+		<releases><enabled>true</enabled></releases>
+	    </repository>
+	    <repository>
+		<id>releases</id>
+		<url>https://github.com/Balvinder471/Blogzy.git</url>
+		<snapshots><enabled>false</enabled></snapshots>
+		<releases><enabled>true</enabled></releases>
+	    </repository>
+	</repositories>
 	<dependencies>
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
@@ -49,11 +69,11 @@
 				<groupId>com.e-gineering</groupId>
 				<artifactId>gitflow-helper-maven-plugin</artifactId>
 				<version>1.4.0</version>
-<!--				<configuration>-->
-<!--					<releaseDeploymentRepository>snapshots::default::${release.url}::false</releaseDeploymentRepository>-->
-<!--					<stageDeploymentRepository>stage::default::${stage.url}::true</stageDeploymentRepository>-->
-<!--					<snapshotDeploymentRepository>release::default::${snapshots.url}::true</snapshotDeploymentRepository>-->
-<!--				</configuration>-->
+				<configuration>-->
+					<releaseDeploymentRepository>releases</releaseDeploymentRepository>
+					<stageDeploymentRepository>test-releases</stageDeploymentRepository>
+					<snapshotDeploymentRepository>snapshots</snapshotDeploymentRepository>
+				</configuration>
 				<extensions>true</extensions>
 				<executions>
 					<execution>
