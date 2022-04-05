@@ -45,6 +45,27 @@
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-maven-plugin</artifactId>
 			</plugin>
+			<plugin>
+				<groupId>com.e-gineering</groupId>
+				<artifactId>gitflow-helper-maven-plugin</artifactId>
+				<version>1.4.0</version>
+<!--				<configuration>-->
+<!--					<releaseDeploymentRepository>snapshots::default::${release.url}::false</releaseDeploymentRepository>-->
+<!--					<stageDeploymentRepository>stage::default::${stage.url}::true</stageDeploymentRepository>-->
+<!--					<snapshotDeploymentRepository>release::default::${snapshots.url}::true</snapshotDeploymentRepository>-->
+<!--				</configuration>-->
+				<extensions>true</extensions>
+				<executions>
+					<execution>
+						<goals>
+							<goal>enforce-versions</goal>
+							<goal>retarget-deploy</goal>
+							<goal>tag-master</goal>
+							<goal>promote-master</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
 		</plugins>
 	</build>
 
