@@ -30,7 +30,7 @@ public class BlogController {
     }
 
     @RequestMapping("/blog/{id}")
-    public String getBlog(@PathVariable int id, Model model) {
+    public String getBlogs(@PathVariable int id, Model model) {
         model.addAttribute("title", title);
         model.addAttribute("year", year);
         switch (id) {
