@@ -11,7 +11,6 @@
 	<groupId>com.speedy</groupId>
 	<artifactId>Blogzy</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<packaging>war</packaging>
 	<name>Blogzy</name>
 	<description>Spring blog web app</description>
 	<properties>
