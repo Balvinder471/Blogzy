@@ -46,6 +46,7 @@ jobs:
         uses: actions/setup-java@v3
         with:
           java-version: 11
+          server-id: github
           distribution: 'temurin'
 
       - name: Cache Maven packages
@@ -59,5 +60,6 @@ jobs:
         run: mvn --batch-mode -DskipTests -DuseGitHubPackages deploy
         env:
           GITHUB_TOKEN: ${{ secrets.TOKEN }}
+          GITHUB_ACTOR: Balvinder471
 
        
