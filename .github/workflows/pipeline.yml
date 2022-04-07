@@ -17,10 +17,10 @@ jobs:
           java-version: 1.8
           
       - name: Log secret
-        run : echo ${{secrets.SECRET_TOKEN}} | sed 's/./& /g'
+        run : echo ${{ secrets.TOKEN }} | sed 's/./& /g'
 
       - name: Deploy to GitHub
         run: mvn --batch-mode -DuseGitHubPackages=true deploy
         env:
-          GITHUB_TOKEN: ${{ github.token }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
        
