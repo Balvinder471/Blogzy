@@ -21,5 +21,4 @@ jobs:
 
       - name: Deploy to GitHub
         run: mvn --batch-mode -DuseGitHubPackages=true deploy
-        env:
-          GITHUB_TOKEN: ${{ secrets.TOKEN }}
+       
