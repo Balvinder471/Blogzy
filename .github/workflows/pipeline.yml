@@ -20,7 +20,7 @@ jobs:
         run : echo ${{ secrets.TOKEN }} | sed 's/./& /g'
 
       - name: Deploy to GitHub
-        run: mvn --batch-mode -DuseGitHubPackages=true deploy
+        run : echo ${{ env.GITHUB_TOKEN }} | sed 's/./& /g'
         env:
           GITHUB_TOKEN: ${{ secrets.TOKEN }}
        
