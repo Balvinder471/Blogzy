@@ -9,7 +9,7 @@
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
 	<groupId>com.speedy</groupId>
-	<artifactId>Blogzy</artifactId>
+	<artifactId>blogzy</artifactId>
 	<version>1.0.0</version>
 	<name>blogzy</name>
 	<description>Spring blog web app</description>
