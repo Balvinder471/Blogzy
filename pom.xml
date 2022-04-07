@@ -29,7 +29,7 @@
 				<repository>
 					<id>github</id>
 					<name>GitHub Packages</name>
-					<url>https://github.com/Balvinder471/spring5-jokes-app-v2</url>
+					<url>https://github.com/Balvinder471/Blogzy</url>
 				</repository>
 			</distributionManagement>
 		</profile>
