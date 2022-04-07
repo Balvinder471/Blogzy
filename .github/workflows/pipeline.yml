@@ -56,7 +56,7 @@ jobs:
           restore-keys: ${{ runner.os }}-m2-
 
       - name: Deploy
-        run: mvn --batch-mode -DskipTests -DuseGitHubPackages -Pgithub-releases deploy
+        run: mvn --batch-mode -DskipTests -DuseGitHubPackages deploy
         env:
           GITHUB_TOKEN: ${{ secrets.TOKEN }}
 
