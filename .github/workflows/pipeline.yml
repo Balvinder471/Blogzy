@@ -31,7 +31,7 @@ jobs:
         run: mvn --batch-mode  install
           
   deploy-github:
-    name: Deploy to GitHub
+    name: Deploy to GitHub2
     runs-on: ubuntu-latest
     needs: build_and_test
     steps:
