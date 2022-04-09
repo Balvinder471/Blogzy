@@ -54,6 +54,14 @@ jobs:
         run: mvn -DskipTests -DuseGitHubPackages deploy
         env:
           GITHUB_TOKEN: ${{ secrets.TOKEN }}
+          
+      - name: Google Chat Notification
+        uses: Co-qn/google-chat-notification@releases/v1
+        with:
+          name: Deploy to Github
+          url: ${{ secrets.GOOGLE_CHAT_WEBHOOK }}
+          status: ${{ job.status }}
+        if: always()
 
 
        
