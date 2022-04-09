@@ -18,7 +18,7 @@ public class BlogController {
     private BlogData fantasyBlog;
     private BlogData scifiBlog;
     private BlogData sportsBlog;
-    private String title;
+    private String titlea;
 
     public BlogController(@Qualifier("natureData") BlogData natureBlog, @Qualifier("fantasyData") BlogData fantasyBlog, @Qualifier("scifiData") BlogData scifiBlog, @Qualifier("sportsData") BlogData sportsBlog) {
         this.natureBlog = natureBlog;
