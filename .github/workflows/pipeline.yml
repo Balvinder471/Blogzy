@@ -58,10 +58,10 @@ jobs:
           package-name: 'com.speedy.blogzy'
           token: ${{ secrets.DELETE_TOKEN }}
 
-      - name: Deploy
-        run: mvn -DskipTests -DuseGitHubPackages deploy
-        env:
-          GITHUB_TOKEN: ${{ secrets.TOKEN }}
+#       - name: Deploy
+#         run: mvn -DskipTests -DuseGitHubPackages deploy
+#         env:
+#           GITHUB_TOKEN: ${{ secrets.TOKEN }}
           
       - name: Google Chat Notification
         uses: Co-qn/google-chat-notification@releases/v1
