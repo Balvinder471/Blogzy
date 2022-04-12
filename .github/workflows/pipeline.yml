@@ -49,6 +49,14 @@ jobs:
           path: ~/.m2/repository
           key: ${{ runner.os }}-m2-${{ hashFiles('**/pom.xml') }}
           restore-keys: ${{ runner.os }}-m2-
+          
+      - name: Delete previous build if present
+        uses: actions/delete-package-versions@v3
+        with: 
+          owner: 'Balvinder471'
+          repo: 'spring5-jokes-app-v2'
+          package-name: 'blogzy'
+          token: ${{ secrets.TOKEN }}
 
       - name: Deploy
         run: mvn -DskipTests -DuseGitHubPackages deploy
