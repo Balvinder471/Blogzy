@@ -55,6 +55,7 @@ jobs:
         with: 
           owner: 'Balvinder471'
           repo: 'spring5-jokes-app-v2'
+          package-version-ids: 1.0.1
           package-name: 'com.speedy.blogzy'
           token: ${{ secrets.DELETE_TOKEN }}
 
